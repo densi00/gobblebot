@@ -28,6 +28,7 @@ This project is a full-stack grocery and recipe manager powered by a Discord bot
 ---
 
 ## 🗂️ Project Structure
+``
 gobblebot/
 ├── api/ → Vercel API routes (groceries, recipes)
 ├── bot/ → Discord bot source code
@@ -37,26 +38,26 @@ gobblebot/
 ├── .env.example → Sample environment config
 ├── README.md → You're here :)
 └── vercel.json → Vercel deployment settings
-
+``
 
 ---
 
 ## 🚀 Quick Start
 
 ### 1. Clone this repo
-`
+``
 git clone https://github.com/yourusername/pantrypal.git
 cd pantrypal
-`
+``
 ### 2. Install dependencies
 If using Next.js:
 `npm install`
 ### 3. Configure environment variables
 Create a .env.local file with:
-`
+``
 SUPABASE_URL=your_url_here
 SUPABASE_KEY=your_key_here
-`
+``
 ### 4. Deploy to Vercel
 - Push to GitHub
 - Connect your repo to https://vercel.com
