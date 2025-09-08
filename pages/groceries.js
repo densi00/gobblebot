@@ -1,26 +1,42 @@
 import Layout from "../components/Layout";
 
-export async function getServerSideProps() {
-  const res = await fetch(`${process.env.SITE_URL}/api/groceries`, {
-    headers: { "X-Bot-Token": process.env.BOT_API_TOKEN }
-  });
-  const data = await res.json().catch(() => ({}));
-  return { props: { groceries: data.groceries || [] } };
+export async function getServerSideProps({ req }) {
+  const proto = req.headers["x-forwarded-proto"] || "http";
+  const host = req.headers.host;
+  const base = `${proto}://${host}`;
+
+  try {
+    const res = await fetch(`${base}/api/groceries`, {
+      headers: { "X-Bot-Token": process.env.BOT_API_TOKEN }
+    });
+    // If unauthorized or other error, don't 500 the page
+    if (!res.ok) {
+      return { props: { groceries: [], error: `API ${res.status}` } };
+    }
+    const data = await res.json();
+    return { props: { groceries: data.groceries || [] } };
+  } catch (e) {
+    return { props: { groceries: [], error: "Fetch failed" } };
+  }
 }
 
-export default function Groceries({ groceries }) {
+export default function Groceries({ groceries, error }) {
   return (
     <Layout>
       <div className="grid" style={{ gap: 16 }}>
         <section className="card">
           <h2 style={{ marginTop: 0 }}>Groceries</h2>
+          {error ? <p className="helper">Note: {error}</p> : null}
           {groceries.length === 0 ? (
             <p className="helper">No items yet.</p>
           ) : (
             <ul className="list">
               {groceries.map((g, i) => (
                 <li key={g.id ?? i}>
-                  <span><strong>{g.name}</strong> {g.category ? <span className="helper">— {g.category}</span> : null}</span>
+                  <span>
+                    <strong>{g.name}</strong>{" "}
+                    {g.category ? <span className="helper">— {g.category}</span> : null}
+                  </span>
                   {g.category ? <span className="badge">{g.category}</span> : null}
                 </li>
               ))}
