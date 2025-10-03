@@ -3,28 +3,30 @@ import Layout from "../components/Layout";
 export default function Home() {
   return (
     <Layout>
-      <div className="grid" style={{ gap: 16 }}>
+      <div className="grid" style={{ gap: 20 }}>
+        {/* Intro card */}
         <section className="card">
-          <h2 style={{ marginTop: 0 }}>Welcome</h2>
+          <h2 style={{ marginTop: 0 }}>Welcome to Gobblebot</h2>
           <p className="helper">
-            Use the navigation to manage groceries and recipes. 
-            This UI is minimal, responsive, and auto-switches 
-            light/dark based on your system theme.
+            Your minimal grocery & recipe manager. Add items to your pantry, keep
+            track of recurring groceries, and store your favorite recipes — all in
+            one clean space. 🌱
           </p>
         </section>
 
+        {/* Navigation cards */}
         <section
           className="grid"
-          style={{ gridTemplateColumns: "1fr 1fr", gap: 16 }}
+          style={{ gridTemplateColumns: "1fr 1fr", gap: 20 }}
         >
           <a
             className="card"
             href="/groceries"
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            <h3 style={{ marginTop: 0 }}>Groceries →</h3>
+            <h3 style={{ marginTop: 0 }}>🛒 Groceries →</h3>
             <p className="helper">
-              View items grouped by category and add new ones.
+              View items grouped by category and add new ones to your list.
             </p>
           </a>
 
@@ -33,9 +35,9 @@ export default function Home() {
             href="/recipes"
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            <h3 style={{ marginTop: 0 }}>Recipes →</h3>
+            <h3 style={{ marginTop: 0 }}>🍳 Recipes →</h3>
             <p className="helper">
-              Keep links & notes for your favorite dishes.
+              Save notes & links for your favorite dishes and inspirations.
             </p>
           </a>
         </section>

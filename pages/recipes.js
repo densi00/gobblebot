@@ -1,24 +1,30 @@
 import Layout from "../components/Layout";
-import { useEffect, useState } from "react";
 
-export default function Recipes() {
-  const [recipes, setRecipes] = useState([]);
+export async function getServerSideProps({ req }) {
+  const proto = req.headers["x-forwarded-proto"] || "http";
+  const host = req.headers.host;
+  const base = `${proto}://${host}`;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("/api/recipes");
-      const data = await res.json();
-      setRecipes(data.recipes || []);
-    };
-    fetchData();
-  }, []);
+  try {
+    const res = await fetch(`${base}/api/recipes`, {
+      headers: { "X-Bot-Token": process.env.BOT_API_TOKEN }
+    });
+    if (!res.ok) return { props: { recipes: [], error: `API ${res.status}` } };
+    const data = await res.json();
+    return { props: { recipes: data.recipes || [] } };
+  } catch {
+    return { props: { recipes: [], error: "Fetch failed" } };
+  }
+}
 
+export default function Recipes({ recipes, error }) {
   return (
     <Layout>
       <div className="grid" style={{ gap: 16 }}>
         {/* Recipes List */}
         <section className="card">
           <h2 style={{ marginTop: 0 }}>Recipes</h2>
+          {error ? <p className="helper">Note: {error}</p> : null}
           {recipes.length === 0 ? (
             <p className="helper">No recipes yet.</p>
           ) : (

@@ -1,18 +1,23 @@
 import Layout from "../components/Layout";
-import { useEffect, useState } from "react";
 
-export default function Groceries() {
-  const [groceries, setGroceries] = useState([]);
+export async function getServerSideProps({ req }) {
+  const proto = req.headers["x-forwarded-proto"] || "http";
+  const host = req.headers.host;
+  const base = `${proto}://${host}`;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("/api/groceries");
-      const data = await res.json();
-      setGroceries(data.groceries || []);
-    };
-    fetchData();
-  }, []);
+  try {
+    const res = await fetch(`${base}/api/groceries`, {
+      headers: { "X-Bot-Token": process.env.BOT_API_TOKEN }
+    });
+    if (!res.ok) return { props: { groceries: [], error: `API ${res.status}` } };
+    const data = await res.json();
+    return { props: { groceries: data.groceries || [] } };
+  } catch {
+    return { props: { groceries: [], error: "Fetch failed" } };
+  }
+}
 
+export default function Groceries({ groceries, error }) {
   const categories = [
     "Produce",
     "Dairy",
@@ -33,6 +38,7 @@ export default function Groceries() {
         {/* Grocery List */}
         <section className="card">
           <h2 style={{ marginTop: 0 }}>Groceries</h2>
+          {error ? <p className="helper">Note: {error}</p> : null}
           {groceries.length === 0 ? (
             <p className="helper">No items yet.</p>
           ) : (
