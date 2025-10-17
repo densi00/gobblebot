@@ -1,9 +1,11 @@
 # gobblebot
 This project is a full-stack grocery and recipe manager powered by a Discord bot and a Vercel-hosted API. Users can add groceries and recipes via Discord, and view them through a web interface or REST API.
 
+IT'S IN PROGRESS!!
+
 ---
 
-## ✨ Features
+## Features
 
 - Add grocery items by category using a Discord bot  
 - Store recipes with names, links, and notes  
@@ -15,7 +17,7 @@ This project is a full-stack grocery and recipe manager powered by a Discord bot
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 
 | Layer         | Tool                |
 |---------------|---------------------|
@@ -27,7 +29,7 @@ This project is a full-stack grocery and recipe manager powered by a Discord bot
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 ```
 gobblebot/
 ├── api/ → Vercel API routes (groceries, recipes)
@@ -42,7 +44,7 @@ gobblebot/
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone this repo
 ```
@@ -63,7 +65,7 @@ SUPABASE_KEY=your_key_here
 - Connect your repo to https://vercel.com
 - Add your environment variables under project settings
 
-## 🤖 Bot Commands
+## Bot Commands
 Command	Purpose
 - !addgrocery "Milk" category:"Dairy"	Adds item under category
 - !addrecipe "Pasta" link:"url.com"	Saves a recipe
@@ -72,13 +74,13 @@ Command	Purpose
 
 The bot makes secure HTTP requests to your Vercel API and updates the shared database.
 
-## 💡 Future Ideas
+## Future Ideas
 - Multi-user support
 - Authenticated recipe books
 - Smart inventory tracking
 - Discord recipe suggestions
 - "What's in my fridge?" AI prompts
 
-## 🧾 License
-MIT — free to use, hack, remix, and share.
+## License
+
 
